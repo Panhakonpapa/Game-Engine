@@ -1,5 +1,5 @@
 #include "Header/physic.h" 
-#include <SDL2/SDL_image.h>
+#include "Header/world.h"
 #define WIDTH 800 
 #define HEIGHT 600 
 int main() {
@@ -12,12 +12,15 @@ int main() {
 				WIDTH, 
 				HEIGHT,
 				0); 	
-	renderer = SDL_CreateRenderer(window, -1, 0); 	
+	renderer = SDL_CreateRenderer(window, -1, 0); 			
+	SDL_Texture* Backgound = world(renderer, "/home/panha/Game-Engine/assets/world/PREVIEWS/Hills Free (update 3.0).png"); 	
 	while (1)
 	{
-		SDL_SetRenderDrawColor(renderer, 0 , 0, 0, 255);
+				
 		SDL_RenderClear(renderer);
+		SDL_RenderCopy(renderer, Backgound, NULL, NULL); 	
 		SDL_RenderPresent(renderer);
+		SDL_Delay(16); 	
 	}
 	return 0; 
 } 

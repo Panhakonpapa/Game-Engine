@@ -1,15 +1,15 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -g
 
-SRCS = camera.c world.c player.c music.c physic.c
-LINKER = -lSDL2 
+SRCS = world.c 
+LINKER = -lSDL2 -lSDL2_image 
 OBJS = main.c  
 EXEC = exe 
 
 all: $(EXEC)
 
 $(EXEC): $(OBJS)
-	$(CC) $(CFLAGS) $(LINKER) -o $@ $^
+	$(CC) $(CFLAGS) $(LINKER) $(SRCS) -o $@ $^
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
