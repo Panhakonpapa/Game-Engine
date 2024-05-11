@@ -1,4 +1,4 @@
-#include "physic.h" 
+#include "Header/physic.h" 
 #include <SDL2/SDL_image.h>
 #define WIDTH 800 
 #define HEIGHT 600 
@@ -15,7 +15,7 @@ int main() {
 	renderer = SDL_CreateRenderer(window, -1, 0); 	
 	while (1)
 	{
-		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+		SDL_SetRenderDrawColor(renderer, 0 , 0, 0, 255);
 		SDL_RenderClear(renderer);
 		SDL_RenderPresent(renderer);
 	}
