@@ -1,6 +1,6 @@
 #ifndef WORLD 
 #define WORLD
-#include "Header/world.h"
+#include "/home/panha/Game-Engine/Header/world.h"
 SDL_Texture* world(SDL_Renderer* renderer, const char* filename) {
 	SDL_Surface* surface = IMG_Load(filename);
 	if (surface == NULL) 

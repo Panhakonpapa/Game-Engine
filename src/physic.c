@@ -1,6 +1,6 @@
 #ifndef PHYSIC 
 #define PHYSIC 
-#include "Header/physic.h"
+#include "/home/panha/Game-Engine/Header/physic.h"
 
 #define WIDTH 800
 #define HEIGHT 600
