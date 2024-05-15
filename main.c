@@ -1,4 +1,3 @@
-#include "Header/physic.h" 
 #include "Header/world.h"
 #include "Header/player.h"
 #include <stdbool.h>
@@ -23,22 +22,26 @@ int main() {
 	renderer = SDL_CreateRenderer(window, -1, 0); 
 	/* SDL get EVent */	
 	SDL_Event event;
-	int gameOver = true; 	
-	
+	int gameOver = true;
+	Player player; 
+	call_Player(&player);
+
 	while (gameOver == true)  
 	{		
 		while (SDL_PollEvent(&event)) {
 			switch (event.key.keysym.sym) {
-				case SDLK_s: 
+				case SDLK_s:
+					movement(&player, 0, 1); 
 					break; 
 				case SDLK_w:
+					movement(&player, 0, -1); 
 					break; 
 				case SDLK_d:
+					movement(&player, 1, 0); 
 					break; 
 				case SDLK_a:
+					movement(&player, -1, 0); 
 					break; 
-				case SDLK_q:
-					break;
 			}	
 		}	
 		SDL_RenderClear(renderer);

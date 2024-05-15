@@ -1,9 +1,7 @@
 #ifndef PLAYER_H 
 #define PLAYER_H
 #include "/home/panha/Game-Engine/Header/player.h"
-#include "/home/panha/Game-Engine/Header/physic.h"
-
-
+#define HEIGHT 600 
 SDL_Texture* player(SDL_Renderer* renderer, const char* filename) 
 {
 	SDL_Surface* surface = IMG_Load(filename); 
@@ -11,12 +9,33 @@ SDL_Texture* player(SDL_Renderer* renderer, const char* filename)
 	SDL_FreeSurface(surface); 
 	return texture; 
 }
-void call_Player(Objcet* objcet) {
-	objcet->vectorX = 400; 	
-	objcet->vectorY = 300;
-	objcet->width = 50; 
-	objcet->height = 50;
-	objcet->jumpactive = 0;
-	objcet->speed = 10;
+
+void call_Player(Player* player) {
+	player->vectorX = 400; 	
+	player->vectorY = 300;
+	player->width = 50; 
+	player->height = 50;
+	player->jumpactive = 0;
+	player->speed = 10;
 }
+void jump(Player* player)
+{
+	player->jumpactive = 1; 	
+	if (player->jumpactive == 1)
+	{
+		player->vectorY -= sqrt(2 * 100 * 9.8); 
+	}
+
+	if (player->vectorY + player->height >= HEIGHT)
+	{
+		player->jumpactive = 0; 
+	}
+}
+
+void movement(Player* player, int dirx, int diry)
+{
+	player->vectorX += dirx * player->speed; 
+	player->vectorY += diry * player->speed;
+}
+
 #endif 
