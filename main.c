@@ -22,11 +22,10 @@ int main() {
 	renderer = SDL_CreateRenderer(window, -1, 0); 
 	/* SDL get EVent */	
 	SDL_Event event;
-	int gameOver = true;
+	int gameOver = false;
 	Player player; 
 	call_Player(&player);
-
-	while (gameOver == true)  
+	while (gameOver == false)  
 	{		
 		while (SDL_PollEvent(&event)) {
 			switch (event.key.keysym.sym) {
@@ -41,16 +40,28 @@ int main() {
 					break; 
 				case SDLK_a:
 					movement(&player, -1, 0); 
+					break;
+				case SDLK_SPACE: 
+					jump(&player); 
+					break; 	
+				case SDLK_q:
+					gameOver = true; 
 					break; 
 			}	
 		}	
+			
+		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 		SDL_RenderClear(renderer);
-		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+			
+		SDL_Rect Player = {player.vectorX, player.vectorY, player.width, player.height}; 		
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);		
+		SDL_RenderFillRect(renderer, &Player); 				
+		
 		SDL_RenderPresent(renderer);
 		SDL_Delay(FPS); 	
 	}	
 	
-	while (gameOver == false) {
+	while (gameOver == true) {
 		printf("gameOver\n");		
 		while (SDL_PollEvent(&event)) {
 		switch (event.key.keysym.sym) {
