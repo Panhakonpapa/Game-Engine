@@ -1,6 +1,4 @@
-#include "Header/world.h"
 #include "Header/player.h"
-#include <stdbool.h>
 
 #define WIDTH 800 
 #define HEIGHT 600 
@@ -22,24 +20,30 @@ int main() {
 	renderer = SDL_CreateRenderer(window, -1, 0); 
 	/* SDL get EVent */	
 	SDL_Event event;
+	int gravity; 
 	int gameOver = false;
-	Player player; 
-	call_Player(&player);
+	/* calling platform */	
+	Platform platform;
+	create_platform(&platform, 370, 370, 100, 50); 
+	/* Calling player Objcet */	
+	Player player; 	
+	create_Player(&player, 400, 400, 50, 50, 20);
+	
 	while (gameOver == false)  
 	{		
 		while (SDL_PollEvent(&event)) {
 			switch (event.key.keysym.sym) {
 				case SDLK_s:
-					movement(&player, 0, 1); 
+					handle_movement(&player, 0, 1); 
 					break; 
 				case SDLK_w:
-					movement(&player, 0, -1); 
+					handle_movement(&player, 0, -1); 
 					break; 
 				case SDLK_d:
-					movement(&player, 1, 0); 
+					handle_movement(&player, 1, 0); 
 					break; 
 				case SDLK_a:
-					movement(&player, -1, 0); 
+					handle_movement(&player, -1, 0); 
 					break;
 				case SDLK_SPACE: 
 					jump(&player); 
@@ -52,10 +56,23 @@ int main() {
 			
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 		SDL_RenderClear(renderer);
-			
-		SDL_Rect Player = {player.vectorX, player.vectorY, player.width, player.height}; 		
+		
+
+		SDL_Rect Player = {player.vectorX, player.vectorY, player.width, player.height}; 
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);		
-		SDL_RenderFillRect(renderer, &Player); 				
+		SDL_RenderFillRect(renderer, &Player);
+		gravity += 10; 
+		is_player_on_ground(&player, gravity); 	
+		if (is_player_on_platform(&player, &platform) == true) 
+		{
+			printf("%d %d\n", player.vectorX, player.vectorY); 	
+			player.vectorX = platform.x - player.vectorX;
+			player.vectorY = platform.y - player.vectorY; 
+		}
+		
+		SDL_Rect Platform = {platform.x, platform.y, platform.w, platform.h}; 	
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);	
+		SDL_RenderFillRect(renderer, &Platform); 	
 		
 		SDL_RenderPresent(renderer);
 		SDL_Delay(FPS); 	
