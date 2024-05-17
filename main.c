@@ -1,4 +1,5 @@
 #include "Header/player.h"
+#include "Header/physic.h"
 
 #define WIDTH 800 
 #define HEIGHT 600 
@@ -20,11 +21,14 @@ int main() {
 	renderer = SDL_CreateRenderer(window, -1, 0); 
 	/* SDL get EVent */	
 	SDL_Event event;
-	int gravity; 
 	int gameOver = false;
+	int gravity = 10; 	
 	/* calling platform */	
-	Platform platform;
-	create_platform(&platform, 370, 370, 100, 50); 
+	Platform platform1, platform2, platform3;
+	create_platform(&platform1, 370, 370, 200, 10); 	
+	create_platform(&platform2, 100, 370, 200, 10);
+	create_platform(&platform3, 580, 390, 200, 10); 
+
 	/* Calling player Objcet */	
 	Player player; 	
 	create_Player(&player, 400, 400, 50, 50, 20);
@@ -33,12 +37,6 @@ int main() {
 	{		
 		while (SDL_PollEvent(&event)) {
 			switch (event.key.keysym.sym) {
-				case SDLK_s:
-					handle_movement(&player, 0, 1); 
-					break; 
-				case SDLK_w:
-					handle_movement(&player, 0, -1); 
-					break; 
 				case SDLK_d:
 					handle_movement(&player, 1, 0); 
 					break; 
@@ -54,26 +52,23 @@ int main() {
 			}	
 		}	
 			
-		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);		
 		SDL_RenderClear(renderer);
-		
 
-		SDL_Rect Player = {player.vectorX, player.vectorY, player.width, player.height}; 
-		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);		
-		SDL_RenderFillRect(renderer, &Player);
-		gravity += 10; 
+		player_init(renderer, &player); 	
+		
 		is_player_on_ground(&player, gravity); 	
-		if (is_player_on_platform(&player, &platform) == true) 
+		
+		if (is_player_on_platform(&player, &platform1) || 
+		    is_player_on_platform(&player, &platform2) || 
+		    is_player_on_platform(&player, &platform3)) 
 		{
 			printf("%d %d\n", player.vectorX, player.vectorY); 	
-			player.vectorX = platform.x - player.vectorX;
-			player.vectorY = platform.y - player.vectorY; 
+			player.vectorY -= gravity; 	
 		}
 		
-		SDL_Rect Platform = {platform.x, platform.y, platform.w, platform.h}; 	
-		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);	
-		SDL_RenderFillRect(renderer, &Platform); 	
-		
+		platform_init(renderer, &platform1, &platform2, &platform3);
+
 		SDL_RenderPresent(renderer);
 		SDL_Delay(FPS); 	
 	}	
