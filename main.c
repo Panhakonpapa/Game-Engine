@@ -19,6 +19,10 @@ int main() {
 	
 	/* SDL Create renderer */	
 	renderer = SDL_CreateRenderer(window, -1, 0); 
+	SDL_Texture* PlatformTexture = world(renderer, "/home/panha/Bug-fix/Game-FS/assets/pixil-frame-1.png");	
+	SDL_Texture* BackgroundTexture = world(renderer, "/home/panha/Bug-fix/Game-FS/assets/bg.png"); 
+	SDL_Texture* PlayerTexture = player(renderer, "/home/panha/Bug-fix/Game-FS/assets/pixil-frame-0.png"); 
+
 	/* SDL get EVent */	
 	SDL_Event event;
 	int gameOver = false;
@@ -52,10 +56,10 @@ int main() {
 			}	
 		}	
 			
-		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);		
-		SDL_RenderClear(renderer);
-
-		player_init(renderer, &player); 	
+		SDL_RenderClear(renderer);	
+		SDL_RenderCopy(renderer, BackgroundTexture, NULL, NULL); 	
+		
+		player_init(renderer, PlayerTexture, &player); 		
 		
 		is_player_on_ground(&player, gravity); 	
 		
@@ -67,7 +71,7 @@ int main() {
 			player.vectorY -= gravity; 	
 		}
 		
-		platform_init(renderer, &platform1, &platform2, &platform3);
+		platform_init(renderer, PlatformTexture, &platform1, &platform2, &platform3);
 
 		SDL_RenderPresent(renderer);
 		SDL_Delay(FPS); 	
@@ -79,6 +83,8 @@ int main() {
 		switch (event.key.keysym.sym) {
 				case SDLK_q: 
 					SDL_DestroyRenderer(renderer);
+					SDL_DestroyTexture(PlatformTexture);
+					SDL_DestroyTexture(BackgroundTexture); 
 					SDL_DestroyWindow(window);	
 					SDL_Quit();
 					return 0;

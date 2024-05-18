@@ -29,20 +29,15 @@ void create_platform(Platform* platform, int x, int y, int w, int h)
 	platform->h = h; 
 }
 
-void platform_init(SDL_Renderer* renderer, Platform* platform1, Platform* platform2, Platform* platform3) {	
+void platform_init(SDL_Renderer* renderer, SDL_Texture* texture, Platform* platform1, Platform* platform2, Platform* platform3) {	
 	SDL_Rect plat1 = {platform1->x, platform1->y, platform1->w, platform1->h}; 	
-	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);	
-	SDL_RenderFillRect(renderer, &plat1); 	
+	SDL_RenderCopy(renderer, texture, NULL, &plat1); 
 
-		
-	SDL_Rect plat2 = {platform2->x, platform2->y, platform2->w, platform2->h}; 	
-	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);	
-	SDL_RenderFillRect(renderer, &plat2);
+	SDL_Rect plat2 = {platform2->x, platform2->y, platform2->w, platform2->h}; 		
+	SDL_RenderCopy(renderer, texture, NULL, &plat2); 
 
-		
-	SDL_Rect plat3 = {platform3->x, platform3->y, platform3->w, platform3->h}; 	
-	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);	
-	SDL_RenderFillRect(renderer, &plat3);
+	SDL_Rect plat3 = {platform3->x, platform3->y, platform3->w, platform3->h}; 		
+	SDL_RenderCopy(renderer, texture, NULL, &plat3); 
 
 } 	
 /* Player part */
@@ -107,9 +102,9 @@ bool is_player_on_platform(Player* player, Platform* platfromsrc) {
 		player->vectorY + player->height > platfromsrc->y);  
 }
 
-void player_init(SDL_Renderer* renderer, Player* player) {	
+void player_init(SDL_Renderer* renderer, SDL_Texture* texture, Player* player) {	
 	SDL_Rect Player = {player->vectorX, player->vectorY, player->width, player->height}; 
-	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);		
-	SDL_RenderFillRect(renderer, &Player);
+		
+	SDL_RenderCopy(renderer, texture, NULL, &Player); 
 }
 #endif 
