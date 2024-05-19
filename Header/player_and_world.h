@@ -26,6 +26,8 @@ void jump(Player* player);
 void create_Player(Player* player, int x, int y, int w, int h, int speed); 
 void is_player_on_ground(Player* player, int gravity); 
 bool is_player_on_platform(Player* player, Platform* platfromsrc); 
-void platform_init(SDL_Renderer* renderer, SDL_Texture* texture, Platform* platform1, Platform* platform2, Platform* platform3);
+void platform_init(SDL_Renderer* renderer, SDL_Texture* texture, Platform* platform1, Platform* platform2, Platform* platform3, Platform* platform4, Platform* platform5, SDL_Texture* lader);
 void player_init(SDL_Renderer* renderer, SDL_Texture* texture , Player* player); 
+void update_platform(Platform* platform, int posx, int posy);
+
 #endif 
