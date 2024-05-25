@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -g
 
-SRCS = src/player_and_world.c 
+SRCS = src/game_libs.c 
 LINKER = -lSDL2 -lSDL2_image 
 OBJS = main.c  
 EXEC = exe 

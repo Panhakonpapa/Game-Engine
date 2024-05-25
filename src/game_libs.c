@@ -1,7 +1,7 @@
 #ifndef PLAYER_H 
 #define PLAYER_H
 
-#include "/home/panha/Bug-fix/Game-FS/Header/player_and_world.h"
+#include "/home/panha/Bug-fix/Game-FS/game_libs.h"  
 
 #define HEIGHT 600 
 
@@ -21,7 +21,7 @@ SDL_Texture* world(SDL_Renderer* renderer, const char* filename) {
 	SDL_FreeSurface(surface);
 	return texture; 
 }
-void create_platform(Platform* platform, int x, int y, int w, int h)
+void create_platform(Platform* platform, float x, float y, float w, float h)
 {
 	platform->x = x; 
 	platform->y = y; 
@@ -69,7 +69,7 @@ SDL_Texture* player(SDL_Renderer* renderer, const char* filename)
 	return texture; 
 }
 
-void create_Player(Player* player, int x, int y, int w, int h, int speed) {
+void create_Player(Player* player, float x, float y, float w, float h, float speed) {
 	player->vectorX = x; 	
 	player->vectorY = y;
 	player->width = w; 
@@ -82,7 +82,7 @@ void jump(Player* player)
 	player->jumpactive = 1; 	
 	if (player->jumpactive == 1)
 	{
-		player->vectorY -= sqrt(2 * 100 * 9.8); 
+		player->vectorY -= sqrt(2.f * 300.f * 9.8); 
 	}
 
 	if (player->vectorY + player->height >= HEIGHT)
@@ -97,7 +97,7 @@ void handle_movement(Player* player, int dirx, int diry)
 	player->vectorY += diry * player->speed;
 }
 
-void is_player_on_ground(Player* player, int gravity) 
+void is_player_on_ground(Player* player, float gravity) 
 {
 	player->vectorY += gravity; 	
 	if (player->vectorY + player->height >= HEIGHT)
@@ -119,4 +119,21 @@ void player_init(SDL_Renderer* renderer, SDL_Texture* texture, Player* player) {
 		
 	SDL_RenderCopy(renderer, texture, NULL, &Player); 
 }
+
+
+void init_coins(Dimon* dimon, float x, float y, float w, float h, int set) {
+	dimon->x = x; 
+	dimon->y = y; 
+	dimon->w = w; 
+	dimon->h = h;
+	dimon->set_render = set; 
+}
+
+bool detect_Dimon(Dimon dimon[], Player* player) {
+	return (dimon->x < player->vectorX + player->width &&
+		dimon->x + dimon->w > player->vectorX && 
+		dimon->y < player->vectorY + player->height &&
+		dimon->y + dimon->h > player->vectorY); 
+}
+
 #endif 
