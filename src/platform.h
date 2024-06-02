@@ -1,8 +1,6 @@
 #include <stdlib.h>
+#include "struct.h"
+Platform* create_platform(int numPlatform);
+void pos_platform(Platform platform[], int numPlatform);
+void distroy_platform(Platform* platform); 
 
-typedef struct {
-	float x, y; 
-	float w, h; 
-} Platform;
-
-Platform* create_platform(float x, float y, float w, float h); 

@@ -1,16 +1,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <stdbool.h>
-
-
-
-typedef struct {	
-	float vectorX, vectorY; 
-	float width, height; 
-	float speed;
-	float jumpactive;  
-} Player;
-
+#include "struct.h"
 Player* create_player(float x, float y, float w, float h, float speed);  
 void distory_player(Player* player); 
 void jump(Player* player); 
