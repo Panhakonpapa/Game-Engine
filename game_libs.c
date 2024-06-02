@@ -1,8 +1,8 @@
 #ifndef PLAYER_H 
 #define PLAYER_H
 
-#include "/home/panha/Bug-fix/Game-FS/game_libs.h"  
-
+#include "/home/panha/game/Game-FS/game_libs.h"  
+#include <stdlib.h>
 #define HEIGHT 600 
 
 
@@ -69,14 +69,28 @@ SDL_Texture* player(SDL_Renderer* renderer, const char* filename)
 	return texture; 
 }
 
-void create_Player(Player* player, float x, float y, float w, float h, float speed) {
-	player->vectorX = x; 	
-	player->vectorY = y;
-	player->width = w; 
-	player->height = h;
-	player->jumpactive = 0;
-	player->speed = speed;
+void create_player(Player* player, float x, float y, float w, float h, float speed) {
+	player = (Player *)malloc(sizeof(Player)); 	
+	if (player != NULL) 
+	{	
+		player->vectorX = x; 	
+		player->vectorY = y;
+		player->width = w; 
+		player->height = h;
+		player->jumpactive = 0;
+		player->speed = speed;
+	}
+	else 
+	{
+		free(player); 	
+		exit(1);  
+	}
 }
+void distory_player(Player* player)
+{
+	free(player); 
+}
+
 void jump(Player* player)
 {
 	player->jumpactive = 1; 	

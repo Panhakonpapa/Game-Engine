@@ -18,11 +18,11 @@ int main() {
 	
 	/* SDL Create renderer */	
 	renderer = SDL_CreateRenderer(window, -1, 0); 
-	SDL_Texture* PlatformTexture = world(renderer, "/home/panha/Bug-fix/Game-FS/assets/ground.png");	
-	SDL_Texture* BackgroundTexture = world(renderer, "/home/panha/Bug-fix/Game-FS/assets/bg.png"); 
-	SDL_Texture* PlayerTexture = player(renderer, "/home/panha/Bug-fix/Game-FS/assets/pee.png"); 	
-	SDL_Texture* Lader = world(renderer, "/home/panha/Bug-fix/Game-FS/assets/pixil-frame-2.png");
-	SDL_Texture* Coins = world(renderer, "/home/panha/Bug-fix/Game-FS/assets/coins.png");
+	SDL_Texture* PlatformTexture = world(renderer, "/home/panha/game/Game-FS/assets/ground.png");	
+	SDL_Texture* BackgroundTexture = world(renderer, "/home/panha/game/Game-FS/assets/bg.png"); 
+	SDL_Texture* PlayerTexture = player(renderer, "/home/panha/game/Game-FS/assets/pee.png"); 	
+	SDL_Texture* Lader = world(renderer, "/home/panha/game/Game-FS/assets/pixil-frame-2.png");
+	SDL_Texture* Coins = world(renderer, "/home/panha/game/Game-FS/assets/coins.png");
 
 	/* SDL get EVent */	
 	SDL_Event event;
