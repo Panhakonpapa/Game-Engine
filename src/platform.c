@@ -1,4 +1,4 @@
-#include "platform.h"
+#include "/home/panha/game/Game-FS/include/platform.h"
 #include <stdio.h>
 
 void pos_platform(Platform platform[], int numPlatform) {
@@ -6,12 +6,18 @@ void pos_platform(Platform platform[], int numPlatform) {
 	float diff_x = 50;
 	for (int i = 0; i < numPlatform; i++) 
 	{
-		platform[i].x = origin + diff_x;
-		platform[i].y = origin;
-		origin += 200; 
-		diff_x += 50;
-		printf("%f\n", platform[i].x); 	
-		printf("%f\n", platform[i].y); 
+		platform[i].plat_x = origin + diff_x;
+		platform[i].plat_y = origin;
+		if (platform[i].plat_x && platform[i].plat_y > 800)	
+		{
+			diff_x = -50; 	
+		}
+		if (platform[i].plat_x && platform[i].plat_y < 0) 
+		{
+			diff_x = 50; 
+		}
+		printf("%f\n", platform[i].plat_x); 	
+		printf("%f\n", platform[i].plat_y); 
 	}
 }
 
@@ -23,14 +29,18 @@ Platform* create_platform(int numPlatform)
 		return platform; 
 	}
 	else {
-		free(platform); 
+		if (platform == NULL) {	
+			free(platform); 
+			printf("Error Memory won't able to alllcated so it drop fucntion <create_platform>\n");  	
+		}
+			
 		exit(1); 
 	}
 }
 
 void distroy_platform(Platform* platform)
 {
-	if (platform != NULL)	
+	if (platform == NULL)	
 	{	
 		free(platform); 
 	}
