@@ -1,44 +1,62 @@
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#include <stdlib.h>
+#include "/home/panha/game/Game-FS/include/animation.h" 
 
-int main() {
-	SDL_Init(SDL_INIT_EVERYTHING); 	
-	SDL_Renderer* renderer; 
-	SDL_Window* window; 
-	window = SDL_CreateShapedWindow(NULL, 
-				SDL_WINDOWPOS_UNDEFINED, 
-				SDL_WINDOWPOS_UNDEFINED, 
-				800, 
-				600,
-				0); 
-	renderer = SDL_CreateRenderer(window, -1, 0); 
-	SDL_Rect dst = {400, 300, 158, 140};
-	int frame = 0;
-		
-	SDL_Surface* surface = IMG_Load("/home/panha/Downloads/Monsters_Creatures_Fantasy/Skeleton/Attack.png"); 	
-	if (surface == NULL) 
-	{
-		printf("Print: Error> Couldn't load the png\n"); 
-	}
-	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface); 	
-	if (texture == NULL)
-	{		
-		printf("Print: Error> Couldn't load the png\n"); 
-	}
-	SDL_FreeSurface(surface); 
-	
-	while (1) {
-		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);	
-		SDL_RenderClear(renderer);	
-			 
-		SDL_Rect src = {frame * 150, 0, 158, 140}; 
-		frame++; 
-		if (frame > 8) {
-			frame = 0; 
+void print_debug(Animation* anime, int loop)
+{
+	printf("loop: %d, anmiaton: x %d\n", loop, anime->x_frame); 
+}
+SDL_Rect draw_animtaion(int x, int y, int w, int h)
+{
+	SDL_Rect dest_src = {x, y, w, h};
+	return dest_src; 
+}
+
+Animation* init_indle_animation() 
+{	
+		Animation* animation = (Animation*)malloc(sizeof(Animation));  	
+		if (animation != NULL)
+		{			
+			animation->x_frame = 0; 
+			animation->y_frame = 0; 
+			animation->w_frame = 150; 
+			animation->h_frame = 140; 
+			animation->n_frame = 4; 			
 		}
-		SDL_RenderCopy(renderer, texture, &src, &dst); 
-		SDL_RenderPresent(renderer);	
-		SDL_Delay(160); 
+		return animation; 
+}
+
+Animation* init_attcak_animation() 
+{	
+		Animation* animation = (Animation*)malloc(sizeof(Animation));  	
+		if (animation != NULL)
+		{			
+			animation->x_frame = 0; 
+			animation->y_frame = 0; 
+			animation->w_frame = 150; 
+			animation->h_frame = 140; 
+			animation->n_frame = 8; 			
+		}
+		return animation; 
+}
+
+void free_anmiation(Animation* src_animation) 
+{
+	if (src_animation != NULL) {
+		free(src_animation); 
 	}
-} 
+}
+
+SDL_Rect src_sprite(Animation* animation, int loop)
+{	
+	SDL_Rect src = {loop * animation->w_frame, animation->y_frame, animation->w_frame, animation->h_frame}; 
+	return src; 
+}
+
+void play_animation(SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect* src, SDL_Rect* dest) {
+	if (renderer && texture != NULL) 
+	{			
+		SDL_RenderCopy(renderer, texture, src, dest);
+	}	
+}
+
 
