@@ -1,23 +1,19 @@
 #include "/home/panha/game/Game-FS/include/platform.h"
 #include <stdio.h>
+#include <SDL2/SDL.h>
 
-void pos_platform(Platform platform[], int numPlatform) {
-	float origin = 200; 
-	float diff_x = 50;
+void renderPlatforms(SDL_Renderer* renderer, SDL_Texture* platformTexture, Platform platforms[], int count) {
+    for (int i = 0; i < count; ++i) {
+        SDL_Rect renderQuad = { platforms[i].plat_x, platforms[i].plat_y, 50, 10 };  
+        SDL_RenderCopy(renderer, platformTexture, NULL, &renderQuad);
+    }
+}
+
+void pos_platform(Platform platform[], int startx, int starty, int spacing, int numPlatform) {
 	for (int i = 0; i < numPlatform; i++) 
 	{
-		platform[i].plat_x = origin + diff_x;
-		platform[i].plat_y = origin;
-		if (platform[i].plat_x && platform[i].plat_y > 800)	
-		{
-			diff_x = -50; 	
-		}
-		if (platform[i].plat_x && platform[i].plat_y < 0) 
-		{
-			diff_x = 50; 
-		}
-		printf("%f\n", platform[i].plat_x); 	
-		printf("%f\n", platform[i].plat_y); 
+		platform[i].plat_x = startx + i * spacing;
+		platform[i].plat_y = starty; 	
 	}
 }
 
@@ -37,7 +33,7 @@ Platform* create_platform(int numPlatform)
 		exit(1); 
 	}
 }
-
+p
 void distroy_platform(Platform* platform)
 {
 	if (platform == NULL)	
