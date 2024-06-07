@@ -38,14 +38,14 @@ SDL_Texture* texture(SDL_Renderer* renderer, const char* filename)
 }
 
 void game_loop(Render* render, Player* player, Game* game, Platform* platform, Animation* animation) {	
-		SDL_Window* window = SDL_CreateWindow(NULL, 
+		render->window = SDL_CreateWindow(NULL, 
 					SDL_WINDOWPOS_UNDEFINED, 
 					SDL_WINDOWPOS_UNDEFINED, 
 					800, 
 					600,
 					0); 	
 			
-		render->renderer = SDL_CreateRenderer(window, -1, 0); 
+		render->renderer = SDL_CreateRenderer(render->window, -1, 0); 
 		SDL_Event event; 	
 		while (game->g_gameOver == false)  
 		{		
@@ -80,8 +80,8 @@ void game_loop(Render* render, Player* player, Game* game, Platform* platform, A
 			while (SDL_PollEvent(&event)) {
 			switch (event.key.keysym.sym) {
 					case SDLK_q: 
-						SDL_DestroyRenderer(renderer);
-						SDL_DestroyWindow(window);	
+						SDL_DestroyRenderer(render->renderer);
+						SDL_DestroyWindow(render->window);	
 						distory_player(player);
 						distroy_platform(platform); 	
 						SDL_Quit();

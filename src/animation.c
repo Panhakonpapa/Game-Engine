@@ -5,6 +5,7 @@ void print_debug(Animation* anime, int loop)
 {
 	printf("loop: %d, anmiaton: x %d\n", loop, anime->x_frame); 
 }
+
 SDL_Rect draw_animtaion(int x, int y, int w, int h)
 {
 	SDL_Rect dest_src = {x, y, w, h};
