@@ -19,22 +19,22 @@ Animation* init_indle_animation()
 		{			
 			animation->x_frame = 0; 
 			animation->y_frame = 0; 
-			animation->w_frame = 150; 
-			animation->h_frame = 140; 
-			animation->n_frame = 4; 			
+			animation->w_frame = 50; 
+			animation->h_frame = 48; 
+			animation->n_frame = 6; 			
 		}
 		return animation; 
 }
 
-Animation* init_attcak_animation() 
+Animation* init_run_animation() 
 {	
 		Animation* animation = (Animation*)malloc(sizeof(Animation));  	
 		if (animation != NULL)
 		{			
 			animation->x_frame = 0; 
 			animation->y_frame = 0; 
-			animation->w_frame = 150; 
-			animation->h_frame = 140; 
+			animation->w_frame = 50; 
+			animation->h_frame = 48; 
 			animation->n_frame = 8; 			
 		}
 		return animation; 
@@ -49,7 +49,7 @@ void free_anmiation(Animation* src_animation)
 
 SDL_Rect src_sprite(Animation* animation, int loop)
 {	
-	SDL_Rect src = {loop * animation->w_frame, animation->y_frame, animation->w_frame, animation->h_frame}; 
+	SDL_Rect src = {animation->x_frame, animation->y_frame + loop * animation->h_frame, animation->w_frame, animation->h_frame}; 
 	return src; 
 }
 

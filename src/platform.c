@@ -33,7 +33,7 @@ Platform* create_platform(int numPlatform)
 		exit(1); 
 	}
 }
-p
+
 void distroy_platform(Platform* platform)
 {
 	if (platform == NULL)	

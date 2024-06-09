@@ -2,17 +2,21 @@
 #include "/home/panha/game/Game-FS/include/player.h"
 #include "/home/panha/game/Game-FS/include/platform.h" 
 #include "/home/panha/game/Game-FS/include/struct.h"
-#include "/home/panha/game/Game-FS/include/physic.h"
+
+#define WIDTH 800 
+#define HEIGHT 600 
+#define FPS 16 
 
 int main() {
 	Game game;
+	Player player; 
 	SDL_Renderer* renderer; 
 	SDL_Window* window; 
    	window = SDL_CreateWindow(NULL,
 				SDL_WINDOWPOS_UNDEFINED,
 				SDL_WINDOWPOS_UNDEFINED,
-				800,
-				600,
+				1000,
+				900,
 				0); 	
 		
 	renderer = SDL_CreateRenderer(window, -1, 0);
@@ -30,18 +34,28 @@ int main() {
 	
 	SDL_Event event;
 	game.g_gameOver = false;	
-	
-	Player* player = create_player(400, 470, 90, 100, 10);  		
-	Animation* animation_idle = init_indle_animation();
-	Animation* animation_run = init_run_animation();		
-	SDL_Texture* texture_idle = create_texture(renderer, "/home/panha/Downloads/Blue_witch/B_witch_idle.png"); 		
-	SDL_Texture* texture_run = create_texture(renderer, "/home/panha/Downloads/Blue_witch/B_witch_run.png"); 		
+	SDL_Texture* texture = create_texture(renderer, "/home/panha/Downloads/Blue_witch/B_witch_idle.png"); 	
+	SDL_Rect dest_aniamtion = draw_animtaion(400, 700, 150, 150);
+	Animation* animation = init_indle_animation();
 	int current_frame = 0; 	
-	int play = 0;  
-
 	while (game.g_gameOver == false)
 	{		
-			
+		while (SDL_PollEvent(&event)) {
+			switch (event.key.keysym.sym) {
+				case SDLK_d:
+					handle_movement(&player, 1, 0);
+					break;
+				case SDLK_a:
+					handle_movement(&player, -1, 0);
+					break;
+				case SDLK_SPACE:
+					jump(&player);
+					break; 	
+				case SDLK_q:
+					game.g_gameOver = true;
+					break;
+			}	
+		}	
 						
 		SDL_RenderClear(renderer);
 			
@@ -56,52 +70,15 @@ int main() {
 		SDL_RenderCopy(renderer, bg8, NULL, NULL);			
 		SDL_RenderCopy(renderer, bg9, NULL, NULL);			
 		
-				
-		SDL_Rect dest_aniamtion = draw_animtaion(player->p_x, player->p_y, player->p_w, player->p_h);
-		SDL_Rect src_idle = src_sprite(animation_idle, current_frame);	
-		SDL_Rect src_run = src_sprite(animation_run, current_frame);					
-		printf("X: %d  Y : %d \n", player->p_x, player->p_y); 				
-		current_frame++;  				
-		if (current_frame > animation_idle->n_frame) 
+		current_frame++;
+		if (current_frame > 6)
 		{
 			current_frame = 0; 
 		}
 		
-		switch (play) {
-			case 1: 		
-				current_frame++;  				
-				if (current_frame > animation_run->n_frame) 
-				{
-					current_frame = 0; 
-				}
-				play_animation(renderer, texture_run, &src_run, &dest_aniamtion);
-				play = 0; 	
-				break; 	
-			default:	
-				play_animation(renderer, texture_idle, &src_idle, &dest_aniamtion); 				
-				
-		}
-		while (SDL_PollEvent(&event)) {
-			switch (event.key.keysym.sym) {
-				case SDLK_d:
-					handle_movement(player, 1, 0);				
-					play = 1;	
-					break;
-				case SDLK_a:
-					handle_movement(player, -1, 0);	
-					break;
-				case SDLK_SPACE:
-					jump(player);
-					break; 	
-				case SDLK_q:
-					game.g_gameOver = true;
-					break;			
-			}	 
-					
-
-		}
-
-		apply_gravity(player, 50); 				
+		SDL_Rect src = src_sprite(animation, current_frame);
+		play_animation(renderer, texture, &src, &dest_aniamtion); 
+		
 		SDL_RenderPresent(renderer);
 		SDL_Delay(90); 	
 	}	

@@ -1,6 +1,6 @@
 #include "/home/panha/game/Game-FS/include/render.h"
 
-SDL_Texture* texture(SDL_Renderer* renderer, const char* filename) 
+SDL_Texture* create_texture(SDL_Renderer* renderer, const char* filename) 
 {
 	SDL_Surface* surface = IMG_Load(filename); 	
 	if (surface == NULL) 
@@ -16,57 +16,21 @@ SDL_Texture* texture(SDL_Renderer* renderer, const char* filename)
 	return texture; 
 }
 
-void game_loop(Render* render, Player* player, Game* game, Platform* platform, Animation* animation) {	
-		render->window = SDL_CreateWindow(NULL, 
-					SDL_WINDOWPOS_UNDEFINED, 
-					SDL_WINDOWPOS_UNDEFINED, 
-					800, 
-					600,
-					0); 	
-			
-		render->renderer = SDL_CreateRenderer(render->window, -1, 0); 
-		SDL_Event event; 	
-		while (game->g_gameOver == false)  
-		{		
-			while (SDL_PollEvent(&event)) {
-				switch (event.key.keysym.sym) {
-					case SDLK_d:
-						handle_movement(player, 1, 0); 
-						break; 
-					case SDLK_a:
-						handle_movement(player, -1, 0); 
-						break;
-					case SDLK_SPACE: 
-						jump(player); 
-						break; 	
-					case SDLK_q:
-						game->g_gameOver = true; 
-						break; 
-				}	
-			}	
-							
-			SDL_RenderClear(render->renderer);	
-			SDL_RenderCopy(render->renderer, render->texture, NULL, NULL);
-							
+SDL_Rect layer1(int x, int y, int w, int h) 
+{
+	SDL_Rect layer1 = {x,  y,  w, h};
+	return layer1; 
+}
 
-			SDL_RenderPresent(render->renderer);
-			SDL_Delay(150); 	
-		}	
 
-		
-		while (game->g_gameOver == true) {
-			printf("gameOver\n");		
-			while (SDL_PollEvent(&event)) {
-			switch (event.key.keysym.sym) {
-					case SDLK_q: 
-						SDL_DestroyRenderer(render->renderer);
-						SDL_DestroyWindow(render->window);	
-						distory_player(player);
-						distroy_platform(platform); 	
-						SDL_Quit();
-						break; 
-		
-				}			
-			}
-		} 
+SDL_Rect layer2(int x, int y, int w, int h) 
+{
+	SDL_Rect layer2 = {x,  y, w, h};
+	return layer2; 
+}
+void create_background(SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect* src, SDL_Rect* dest) {
+	if (texture != NULL && renderer != NULL)	
+	{		
+		SDL_RenderCopy(renderer, texture, src, dest);
+	}
 }

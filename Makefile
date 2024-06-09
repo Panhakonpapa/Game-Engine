@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -g
 
-SRCS = src/platform.c src/player.c src/render.c 
+SRCS = src/animation.c src/player.c src/render.c src/physic.c    
 LINKER = -lSDL2 -lSDL2_image 
 OBJS = main.c  
 EXEC = exe 

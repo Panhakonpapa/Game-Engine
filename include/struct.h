@@ -10,12 +10,12 @@ typedef struct {
 } Platform;
 
 typedef struct {	
-	float p_x; 
-	float p_y; 
-	float p_w; 
-	float p_h; 
-	float p_jactive; 
-	float p_speed; 
+	int p_x; 
+	int p_y; 
+	int p_w; 
+	int p_h; 
+	int p_jactive; 
+	int p_speed; 
 } Player;
 
 typedef struct {

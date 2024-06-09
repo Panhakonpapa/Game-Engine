@@ -1,28 +1,25 @@
 #include "/home/panha/game/Game-FS/include/physic.h"
 
 
-#define GRAVITY 10
 
 void handle_movement(Player* player, int dirx, int diry)
 {
-	if (dirx == 1) 
-	{			
-		player->p_x += dirx * player->p_speed; 
-	}
-	if (diry == 1) 
-	{
-		player->p_y += diry * player->p_speed;
-
-	}
+			
+	player->p_x += dirx * player->p_speed; 	
+	player->p_y += diry * player->p_speed;
 }
-void apply_gravity(Player* player) 
+
+void apply_gravity(Player* player, int gravity)  
 {
-	player->p_y += GRAVITY; 	
-	if (player->p_y + player->p_y >= 600)
+	player->p_y += gravity; 
+	player->p_x += gravity; 	
+	if (player->p_y - 25 > 470)
 	{
-		player->p_y -= GRAVITY; 
-		player->p_jactive = 0; 	
+		player->p_y -= gravity; 
+		player->p_x -= gravity; 
+		player->p_jactive = 0;
 	}
+	
 }
 
 bool collision(Player* player, Player* dest) 
@@ -35,14 +32,8 @@ bool collision(Player* player, Player* dest)
 
 void jump(Player* player)
 {
-	player->p_jactive = 1; 	
-	if (player->p_jactive == 1)
-	{
-		player->p_y -= sqrt(2.f * 300.f * 9.8); 
-	}
-
-	if (player->p_y + player->p_h >= 600)
-	{
-		player->p_y = 0; 
-	}
+	player->p_x += 10; 
+	player->p_y -= 100; 
 }
+
+
