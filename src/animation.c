@@ -40,11 +40,31 @@ Animation* init_run_animation()
 		return animation; 
 }
 
+Animation* init_charge_animation() 
+{	
+		Animation* animation = (Animation*)malloc(sizeof(Animation));  	
+		if (animation != NULL)
+		{			
+			animation->x_frame = 0; 
+			animation->y_frame = 0; 
+			animation->w_frame = 50; 
+			animation->h_frame = 48; 
+			animation->n_frame = 5; 			
+		}
+		return animation; 
+}
+
 void free_anmiation(Animation* src_animation) 
 {
 	if (src_animation != NULL) {
 		free(src_animation); 
 	}
+}
+
+SDL_Rect src_sprite_attack(Animation* animation, int loop)
+{	
+	SDL_Rect src = {animation->x_frame * 20, animation->y_frame + loop * animation->h_frame, animation->w_frame, animation->h_frame}; 
+	return src; 
 }
 
 SDL_Rect src_sprite(Animation* animation, int loop)
