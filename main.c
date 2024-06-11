@@ -3,6 +3,7 @@
 #include "/home/panha/game/Game-FS/include/platform.h" 
 #include "/home/panha/game/Game-FS/include/struct.h"
 #include "/home/panha/game/Game-FS/include/physic.h"
+#include <SDL2/SDL_mixer.h>
 int main() {
 	Game game;
 	SDL_Renderer* renderer; 
@@ -15,6 +16,24 @@ int main() {
 				0); 	
 		
 	renderer = SDL_CreateRenderer(window, -1, 0);
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) 
+	{
+        	printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
+        	return -1;
+	}
+
+	Mix_Music *bgMusic = Mix_LoadMUS("/home/panha/Downloads/Ambient Music.wav");
+	if (bgMusic == NULL) 
+	{
+		printf("Failed to load background music! SDL_mixer Error: %s\n", Mix_GetError());
+		return -1;
+	}
+
+	if (Mix_PlayMusic(bgMusic, -1) == -1) 
+	{
+		printf("SDL_mixer could not play music! SDL_mixer Error: %s\n", Mix_GetError());
+		return -1;
+	}	
 	
 	/* Backgornd layer render */
 	SDL_Texture* bg_layer[10]; 
@@ -26,7 +45,7 @@ int main() {
 
 	/* Player init */
 	Player* player = create_player(400, 470, 90, 100, 10);  			
-	
+
 	/* Init anmation */	
 	int current_frame = 0; 	
 	int play = 0;  
@@ -111,6 +130,9 @@ int main() {
 		}
 
 		apply_gravity(player, 50); 				
+		if (player->p_x + player->p_w > 800) {
+			player->p_x = 0; 
+		}	
 		SDL_RenderPresent(renderer);
 		SDL_Delay(90); 	
 	}	
